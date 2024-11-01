@@ -1,4 +1,4 @@
-package com.pe.upc.smartgardenbackend.shared.infrastructure.persistence.jpa.strategy;
+package com.pe.upc.smartgardenbackend.shared.infrastructure.persistence.jpa.configuration.strategy;
 
 
 import org.hibernate.boot.model.naming.Identifier;
@@ -20,7 +20,7 @@ public class SnakeCasePhysicalNamingStrategy implements PhysicalNamingStrategy {
 
     @Override
     public Identifier toPhysicalCatalogName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return this.toSnakeCase(identifier);
+        return null;
     }
 
     @Override
@@ -35,12 +35,12 @@ public class SnakeCasePhysicalNamingStrategy implements PhysicalNamingStrategy {
 
     @Override
     public Identifier toPhysicalSequenceName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return null;
+        return this.toSnakeCase(identifier);
     }
 
     @Override
     public Identifier toPhysicalColumnName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return null;
+        return this.toSnakeCase(identifier);
     }
 
     /**
