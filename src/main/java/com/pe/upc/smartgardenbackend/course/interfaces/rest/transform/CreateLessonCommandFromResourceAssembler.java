@@ -5,6 +5,6 @@ import com.pe.upc.smartgardenbackend.course.interfaces.rest.resources.CreateLess
 
 public class CreateLessonCommandFromResourceAssembler {
     public static CreateLessonCommand toCommandFromResource(CreateLessonResource resource) {
-        return new CreateLessonCommand( resource.id(), resource.title());
+        return new CreateLessonCommand( resource.lessonId(), resource.title(), resource.description(), resource.lessonStatus(), resource.lessonType() );
     }
 }
