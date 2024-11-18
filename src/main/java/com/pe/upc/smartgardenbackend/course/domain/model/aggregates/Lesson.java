@@ -5,36 +5,47 @@ import com.pe.upc.smartgardenbackend.course.domain.model.valueobjects.LessonReco
 import com.pe.upc.smartgardenbackend.course.domain.model.valueobjects.LessonStatus;
 import com.pe.upc.smartgardenbackend.course.domain.model.valueobjects.LessonType;
 import com.pe.upc.smartgardenbackend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
-@Getter
 @Entity
 public class Lesson extends AuditableAbstractAggregateRoot<Lesson> {
 
-    private String title;
-    private String description;
 
-    @Getter
     @Embedded
-    @Column(name = "lesson_id")
     private LessonRecordId lessonRecordId;
 
-    @Embedded
+    @Enumerated(EnumType.STRING)  // Esto guardará los valores como cadenas
     private LessonType type;
+
+    @Enumerated(EnumType.STRING)  // Lo mismo para status
     private LessonStatus status;
 
-    //create new course
+    @Getter
+    private String title;
+    @Getter
+    private String description;
+
+    // Constructor vacío para JPA
     public Lesson() {
         super();
-        this.lessonRecordId = new LessonRecordId();
+        // Generamos un ID válido, por ejemplo, usando el tiempo actual
+        this.lessonRecordId = new LessonRecordId(System.currentTimeMillis()); // Asignamos un valor válido al id
         this.title = Strings.EMPTY;
         this.description = Strings.EMPTY;
-        this.type=LessonType.THEORY;
-        this.status=LessonStatus.PUBLISHED;
+        this.type = LessonType.THEORY;
+        this.status = LessonStatus.PUBLISHED;
+    }
+
+
+    // Constructor con parámetros
+    public Lesson(String title, String description, LessonRecordId lessonRecordId, LessonType type, LessonStatus status) {
+        this.title = title;
+        this.description = description;
+        this.lessonRecordId = lessonRecordId;
+        this.type = type;
+        this.status = status;
     }
 
 
@@ -48,11 +59,11 @@ public class Lesson extends AuditableAbstractAggregateRoot<Lesson> {
     }
 
     public Lesson(CreateLessonCommand command){
-        this.lessonRecordId=new LessonRecordId();
-        this.title= command.title();
+        this.lessonRecordId = new LessonRecordId(); // Aquí también inicializamos el lessonId de manera válida
+        this.title = command.title();
         this.description = command.description();
-        this.type=command.type();
-        this.status=command.status();
+        this.type = command.type();
+        this.status = command.status();
     }
 
     //si no es string es long

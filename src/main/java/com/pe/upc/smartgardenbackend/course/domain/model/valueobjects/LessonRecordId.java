@@ -1,20 +1,24 @@
 package com.pe.upc.smartgardenbackend.course.domain.model.valueobjects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
-
-
+@Getter
 @Embeddable
-public record LessonRecordId() {
-    private static long id;
-    public LessonRecordId {
+public class LessonRecordId {
+    @Column(name = "lesson_id")
+    private long id;
 
+    // Constructor que acepta un ID
+    public LessonRecordId(long id) {
         if (id <= 0) {
             throw new IllegalArgumentException("Lesson lessonId cannot be empty");
         }
+        this.id = id;
     }
-    public long getId() {
-        return id;
-    }
+
+    // Constructor vacío para JPA
+    public LessonRecordId() {}
 
 }
