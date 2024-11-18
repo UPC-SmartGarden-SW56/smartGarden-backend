@@ -19,55 +19,40 @@ import static io.github.encryptorcode.pluralize.Pluralize.pluralize;
 public class SnakeCasePhysicalNamingStrategy implements PhysicalNamingStrategy {
 
     @Override
-    public Identifier toPhysicalCatalogName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return this.toSnakeCase(identifier);
+    public Identifier toPhysicalCatalogName(Identifier name, JdbcEnvironment context) {
+        return convertToSnakeCase(name);
     }
 
     @Override
-    public Identifier toPhysicalSchemaName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return this.toSnakeCase(identifier);
+    public Identifier toPhysicalSchemaName(Identifier name, JdbcEnvironment context) {
+        return convertToSnakeCase(name);
     }
 
     @Override
-    public Identifier toPhysicalTableName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return this.toSnakeCase(this.toPlural(identifier));
+    public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment context) {
+        return convertToSnakeCase(name);
     }
 
     @Override
-    public Identifier toPhysicalSequenceName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return null;
+    public Identifier toPhysicalSequenceName(Identifier name, JdbcEnvironment context) {
+        return convertToSnakeCase(name);
     }
 
     @Override
-    public Identifier toPhysicalColumnName(Identifier identifier, JdbcEnvironment jdbcEnvironment) {
-        return null;
+    public Identifier toPhysicalColumnName(Identifier name, JdbcEnvironment context) {
+        return convertToSnakeCase(name); // No debe devolver null
     }
 
-    /**
-     * Converts the Identifier to Snake Case
-     * @param identifier object identifier
-     * @return Snake Case Identifier
-     */
-    private Identifier toSnakeCase(final Identifier identifier) {
-        if (identifier == null) return null;
+    private Identifier convertToSnakeCase(Identifier identifier) {
+        if (identifier == null) {
+            return null; // Esto evita el NPE
+        }
 
-        final String regex = "([a-z])([A-Z])";
-        final String replacement = "$1_$2";
-        final String newName = identifier.getText()
+        String regex = "([a-z])([A-Z])";
+        String replacement = "$1_$2";
+        String newName = identifier.getText()
                 .replaceAll(regex, replacement)
                 .toLowerCase();
         return Identifier.toIdentifier(newName);
     }
-
-    /**
-     * Pluralizes the Identifier
-     * @param identifier object identifier
-     * @return Pluralized Identifier
-     */
-    private Identifier toPlural(final Identifier identifier) {
-        final String newName = pluralize(identifier.getText());
-        return Identifier.toIdentifier(newName);
-    }
-
-
 }

@@ -10,7 +10,9 @@ import java.util.Optional;
 public interface OrderCommandService {
     Long handle(CreateOrderCommand command);
 
-    Optional<Order> handle(UpdateOrderCommand command);
-
     void handle(DeleteOrderCommand command);
+
+    Order handle(UpdateOrderCommand command);
+
+
 }

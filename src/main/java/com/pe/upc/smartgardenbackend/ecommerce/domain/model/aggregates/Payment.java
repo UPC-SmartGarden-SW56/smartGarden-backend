@@ -1,27 +1,40 @@
 package com.pe.upc.smartgardenbackend.ecommerce.domain.model.aggregates;
+import com.pe.upc.smartgardenbackend.ecommerce.domain.model.valueobjects.PaymentStatus;
 import com.pe.upc.smartgardenbackend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 public class Payment extends AuditableAbstractAggregateRoot<Payment> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Getter
+    private Long id;
 
+    @Getter
+    @Setter
     @Column(nullable = false)
     private String name;
 
+    @Getter
+    @Setter
     @Column(nullable = false)
-    private double amount; // Monto de la transacción o precio total.
+    private double amount;
 
+    @Getter
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private Status status;
+    private PaymentStatus status;
 
-    public enum Status {
-        PENDING,
-        FINISHED,
-        DEBT
+    public Payment() {}
+
+    public Payment(String name, double amount, PaymentStatus status) {
+        this.name = name;
+        this.amount = amount;
+        this.status = status;
     }
 }

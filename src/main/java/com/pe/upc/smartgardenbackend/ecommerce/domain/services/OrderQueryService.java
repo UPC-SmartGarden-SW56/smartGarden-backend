@@ -2,13 +2,13 @@ package com.pe.upc.smartgardenbackend.ecommerce.domain.services;
 
 import com.pe.upc.smartgardenbackend.ecommerce.domain.model.aggregates.Order;
 import com.pe.upc.smartgardenbackend.ecommerce.domain.model.queries.GetAllOrderQuerry;
-import com.pe.upc.smartgardenbackend.ecommerce.domain.model.queries.GetOrderByIdQuerry;
+import com.pe.upc.smartgardenbackend.ecommerce.domain.model.queries.GetOrderByIdQuery;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface OrderQueryService {
-    Optional<Order> handle(GetOrderByIdQuerry querry);
+    Optional<Order> handle(GetOrderByIdQuery query);
 
-    List<Order> handle(GetAllOrderQuerry querry);
+    List<Order> handle(GetAllOrderQuerry query);
 }

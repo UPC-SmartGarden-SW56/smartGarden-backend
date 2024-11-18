@@ -1,5 +1,5 @@
 package com.pe.upc.smartgardenbackend.ecommerce.domain.model.commands;
 
-public record CreateOrderCommand(int customerId,double amount,int status) {
+import com.pe.upc.smartgardenbackend.ecommerce.domain.model.valueobjects.OrderStatus;
 
-}
+public record CreateOrderCommand(int customerId, double amount, OrderStatus status) {}
