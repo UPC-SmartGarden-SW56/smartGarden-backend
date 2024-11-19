@@ -21,6 +21,9 @@ public class OpenApiConfiguration {
                         .license(new License().name("Apache 2.0")
                                 .url("https://springdoc.org")));
 
+
+
+
         // Add security scheme
 
         /*final String securitySchemeName = "bearerAuth";
